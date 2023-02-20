@@ -49,14 +49,6 @@ class MainDrawer extends StatelessWidget {
                 ),
               )
               .toList(),
-          // ListTile(
-          //   tileColor: Colors.white,
-          //   selectedTileColor: lightColor, // 선택된 상태의 배경색
-          //   selectedColor: Colors.black, // 선택된 상태의 글자색
-          //   selected: true, // selectedTileColor&selectedColor 를 반영할 것인지.
-          //   onTap: () {},
-          //   title: const Text('서울'),
-          // ),
         ],
       ),
     );
