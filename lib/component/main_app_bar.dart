@@ -1,3 +1,4 @@
+import 'package:dusty_dust/const/colors.dart';
 import 'package:flutter/material.dart';
 
 class MainAppBar extends StatelessWidget {
@@ -7,7 +8,7 @@ class MainAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     const ts = TextStyle(color: Colors.white, fontSize: 30);
     return SliverAppBar(
-      backgroundColor: Colors.blue,
+      backgroundColor: primaryColor,
       expandedHeight: 500,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
