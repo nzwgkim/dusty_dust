@@ -1,43 +1,71 @@
 import 'package:dusty_dust/component/card_title.dart';
 import 'package:dusty_dust/component/main_card.dart';
 import 'package:dusty_dust/component/main_stat.dart';
-import 'package:dusty_dust/const/colors.dart';
+import 'package:dusty_dust/model/stat_and_status_model.dart';
+import 'package:dusty_dust/utils/data_utils.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({super.key});
+  final String region;
+  final Color darkColor;
+  final Color lightColor;
+  final List<StatAndStatusModel> models;
+
+  const CategoryCard({
+    required this.region,
+    required this.models,
+    required this.darkColor,
+    required this.lightColor,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 160,
       child: MainCard(
-        child: LayoutBuilder(builder: (p0, p1) {
-          // p0: buildContext, p1: constraint
+        backgroundColor: lightColor,
+        child: LayoutBuilder(builder: (context, constraint) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const CardTitle(title: '종류별 통계'),
+              CardTitle(
+                title: '종류별 통계',
+                backgroundColor: darkColor,
+              ),
               Expanded(
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  // 사용자의 scroll입력이 page 단위로 적용됨
                   physics: const PageScrollPhysics(),
-                  children: List.generate(
-                    20,
-                    (index) => MainStat(
-                        //LayoutBuilder의 constraint를 통해,
-                        //layout의 크기 정보를 얻을 수 있다.
-                        width: p1.maxWidth / 3,
-                        category: '미세먼지',
-                        imgPath: 'asset/img/best.png',
-                        level: '최고',
-                        stat: '0 ㎍/㎥'),
-
-                    /// MainStat
-                  ),
+                  children: models
+                      .map(
+                        (model) => MainStat(
+                          width: constraint.maxWidth / 3,
+                          category: DataUtils.getItemCodeKrString(
+                            itemCode: model.itemCode,
+                          ),
+                          imgPath: model.status.imagePath,
+                          level: model.status.label,
+                          stat: '${model.stat.getLevelFromRegion(
+                            region,
+                          )}${DataUtils.getUnitFromItemCode(
+                            itemCode: model.itemCode,
+                          )}',
+                        ),
+                      )
+                      .toList(),
+                  // List.generate(
+                  //   20,
+                  //   (index) => MainStat(
+                  //     width: constraint.maxWidth / 3,
+                  //     category: '미세먼지$index',
+                  //     imgPath: 'asset/img/best.png',
+                  //     level: '최고',
+                  //     stat: '0㎍/㎥',
+                  //   ),
+                  // ),
                 ),
-              )
+              ),
             ],
           );
         }),

@@ -1,5 +1,5 @@
 import 'package:dusty_dust/const/colors.dart';
-import 'package:dusty_dust/const/regions.dart';
+import 'package:dusty_dust/const/region.dart';
 import 'package:flutter/material.dart';
 
 typedef OnRegionTap = void Function(String region);
